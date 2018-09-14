@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>去哪儿</title>
+	<script src="vue.js"></script>
+	<script src="velocity.js"></script>
+<style>
+	[v-cloak] {
+	  display: none !important;
+	}	
+</style>
+</head>
+<body>
+<style>
+/*	@keyframes bounce{
+		0%{
+			transform: scale(1);
+		}
+		50%{
+			transform: scale(1.5);
+		}
+		100%{
+			transform: scale(1);
+		}
+	}
+	.shak-enter-active{
+		transform-origin: left center;
+		animation: bounce 1s; 
+	}
+
+	.shak-leave-active{
+		transform-origin: left center;
+		animation: bounce 1s; 
+	}*/
+</style>
+<div id="cs">
+	<!-- <transition 
+		name='fade'
+		@before-enter = 'handleBeforeEnter'
+		@enter = 'handleEnter'
+		@after-enter = 'handleAfterEnter'
+		>
+		<p v-if="show">{{msg}}</p>
+	</transition> -->
+	<fade :show='show'>
+		<div>
+			nihao		
+		</div>
+	</fade>
+	<button @click="handleClick">Add</button>
+</div>
+</body>
+<script>
+
+Vue.component('fade',{
+	props:['show'],
+	template:`
+		<transition @before-enter="BeforeEnter" @enter="handleEnter" @leave="handleLeave">
+			<slot v-if='show' ></slot>
+		</transition>
+	`,
+	methods:{
+		BeforeEnter: function(el){
+			el.style.color = 'red'
+		},
+		handleEnter: function(el,done){
+			setTimeout(()=>{
+				el.style.color = 'green'
+				done()
+			},2000)
+		},
+		handleLeave:function(el,done){
+			console.log('leave')
+			done()
+		}
+	}
+
+		
+})
+var count = 0;
+new Vue({
+	el:"#cs",
+	data:{
+		show:true
+	},
+	methods:{
+		handleClick: function(){
+			this.show = !this.show
+		}
+		// handle:function(){
+		// 	this.show = !this.show;
+		// },
+		// handleBeforeEnter:function(el){
+		// 	el.style.opacity = 0
+		// },
+		// handleEnter:function(el,done){
+		// 	Velocity(el,{
+		// 		width: "300px",
+		// 		backgroundColor: "#213213",
+		// 		opacity: 1
+		// 	},{
+		// 		duration: 3000,
+		// 		easing: [0.4, 0.01, 0.165, 1],
+		// 		complete: done
+		// 	})
+		// },
+		// handleAfterEnter:function(el){
+		// 	setTimeout(()=>{
+		// 		el.style.color = '#000'
+		// 	},2000)
+		// }
+
+	}
+
+})
+// var counter = {
+// 	props:['count'],
+// 	data:function(){
+// 		return {
+// 			number: this.count
+// 		}
+// 	},
+// 	template:'<div @click="handleClick">{{ number }}</div>',
+// 	methods:{
+// 		handleClick:function(){
+// 			this.number = this.number + 2;
+// 			this.$emit('change',2,10)
+// 		}
+// 	}
+// }
+
+// var app = new Vue({
+// 	el:"#app",
+// 	data:{
+// 		total:0
+// 	},
+// 	components:{
+// 		counter: counter
+// 	},
+// 	methods:{
+// 		appTo:function(data,el){
+// 			console.log(data);
+// 			console.log(el);
+// 			this.total += data
+// 		}
+// 	}
+// })
+
+// Vue.component("counter",{
+// 	template:'<div @click="handleClick">{{ content }}</div>',
+// 	data: function () {
+// 		return  {
+// 			content:0
+// 		}
+// 	},
+// 	methods:{
+// 		handleClick: function(){
+// 			this.content ++
+// 			this.$emit('change')
+// 		}
+// 	}
+// })
+
+// var app = new Vue({
+// 	el: '#app',
+// 	data:{
+// 		total:0
+// 	},
+// 	methods:{
+// 		doCount:function(){
+// 			this.total = this.$refs.one.content + this.$refs.two.content
+// 		}
+// 	}
+// })
+
+
+</script>
+</html>
